@@ -1,14 +1,34 @@
 package com.designpatternsproject.encheres.entities;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public class User {
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="USERS")
+public class User implements Serializable{
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idUser;
 	private String firstName;
 	private String lastName;
 	private String phone;
 	private String address;
 	private String username;
+	private String password;
+	private String profession;
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	Collection<Card> cards;
+	
+	
 	public Long getIdUser() {
 		return idUser;
 	}
@@ -63,8 +83,5 @@ public class User {
 	public void setCards(Collection<Card> cards) {
 		this.cards = cards;
 	}
-	private String password;
-	private String profession;
-	Collection<Card> cards;
 
 }
