@@ -52,13 +52,13 @@ public class Produit {
 	
 	// Constructors
 	
-	public Produit(String name, String etat, String photo, Double prixMin,
+	public Produit(String name, String etat, String photo, Double min,
 			Date dateExp) {
 		super();
 		this.name = name;
 		this.etat = etat;
 		this.photo = photo;
-		this.prixMin = prixMin;
+		this.prixMin = min;
 		this.dateExp = dateExp;
 	}
 	

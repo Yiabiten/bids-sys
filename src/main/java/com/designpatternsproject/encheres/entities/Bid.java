@@ -6,7 +6,7 @@ public class Bid {
 	
 	
 	private Long id;
-	private Produit p;
+	private Produit prod;
 	private Date dateBid;
 	private Card carte;
 	private User user;
