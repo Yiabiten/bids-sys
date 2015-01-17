@@ -28,7 +28,18 @@ public class User implements Serializable{
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	Collection<Card> cards;
 	
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	Collection<Bid> bids;
 	
+	
+	
+	
+	public Collection<Bid> getBids() {
+		return bids;
+	}
+	public void setBids(Collection<Bid> bids) {
+		this.bids = bids;
+	}
 	public Long getIdUser() {
 		return idUser;
 	}
