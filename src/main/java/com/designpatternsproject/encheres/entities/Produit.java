@@ -10,9 +10,15 @@ public class Produit {
 	private String photo;
 	private Long prixMin;
 	private Date dateExp;
-	
+	private User owner;
 	// getters & setters
 	
+	public User getOwner() {
+		return owner;
+	}
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
 	public Long getIdProduit() {
 		return idProduit;
 	}
