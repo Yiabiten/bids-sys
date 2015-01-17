@@ -8,7 +8,7 @@ public class Produit {
 	private String name;
 	private String etat;
 	private String photo;
-	private Double prixMin;
+	private Long prixMin;
 	private Date dateExp;
 	
 	// getters & setters
@@ -37,10 +37,10 @@ public class Produit {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-	public Double getPrixMin() {
+	public Long getPrixMin() {
 		return prixMin;
 	}
-	public void setPrixMin(Double prixMin) {
+	public void setPrixMin(Long prixMin) {
 		this.prixMin = prixMin;
 	}
 	public Date getDateExp() {
@@ -52,7 +52,7 @@ public class Produit {
 	
 	// Constructors
 	
-	public Produit(String name, String etat, String photo, Double min,
+	public Produit(String name, String etat, String photo, Long min,
 			Date dateExp) {
 		super();
 		this.name = name;
