@@ -1,24 +1,40 @@
 package com.designpatternsproject.encheres.entities;
 
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+
+
+
+
+@Entity
+@Table(name="PRODUITS")
 public class Produit {
 	
+	
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idProduit;
+	
+	
 	private String name;
 	private String etat;
 	private String photo;
 	private Long prixMin;
 	private Date dateExp;
-	private User owner;
-	// getters & setters
 	
-	public User getOwner() {
-		return owner;
-	}
-	public void setOwner(User owner) {
-		this.owner = owner;
-	}
+	@OneToMany(mappedBy="produit")
+	private Collection<Bid> bids;
+	
+	
 	public Long getIdProduit() {
 		return idProduit;
 	}
@@ -55,25 +71,27 @@ public class Produit {
 	public void setDateExp(Date dateExp) {
 		this.dateExp = dateExp;
 	}
+	public Collection<Bid> getBids() {
+		return bids;
+	}
+	public void setBids(Collection<Bid> bids) {
+		this.bids = bids;
+	}
 	
-	// Constructors
-	
-	public Produit(String name, String etat, String photo, Long min,
+	public Produit(String name, String etat, String photo, Long prixMin,
 			Date dateExp) {
 		super();
 		this.name = name;
 		this.etat = etat;
 		this.photo = photo;
-		this.prixMin = min;
+		this.prixMin = prixMin;
 		this.dateExp = dateExp;
 	}
-	
 	
 	public Produit() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 	
 	
 	

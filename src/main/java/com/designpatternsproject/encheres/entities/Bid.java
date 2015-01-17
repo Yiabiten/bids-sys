@@ -2,73 +2,109 @@ package com.designpatternsproject.encheres.entities;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+@Entity
+@Table(name="BIDS")
 public class Bid {
 	
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	private Produit prod;
+	
 	private Date dateBid;
-	private Card carte;
+	
+	@ManyToOne
+	@JoinColumn(name="PRODUIT_ID")
+	private Produit produit;
+	
+	@ManyToOne
+	@JoinColumn(name="USER_ID")
 	private User user;
+
+	
 	private Long montant;
+
+	
 	
 	// Getters & Setters
+
 	
-	
-	
-	public Long getMontant() {
-		return montant;
-	}
-	public void setMontant(Long montant) {
-		this.montant = montant;
-	}
 	public Long getId() {
 		return id;
 	}
+
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Produit getProd() {
-		return prod;
-	}
-	public void setProd(Produit prod) {
-		this.prod = prod;
-	}
+
+
 	public Date getDateBid() {
 		return dateBid;
 	}
+
+
 	public void setDateBid(Date dateBid) {
 		this.dateBid = dateBid;
 	}
-	public Card getCarte() {
-		return carte;
+
+
+	public Produit getProduit() {
+		return produit;
 	}
-	public void setCarte(Card carte) {
-		this.carte = carte;
+
+
+	public void setProduit(Produit produit) {
+		this.produit = produit;
 	}
+
+
 	public User getUser() {
 		return user;
 	}
+
+
 	public void setUser(User user) {
 		this.user = user;
 	}
 
-	// Constructors
-	
-	public Bid(Produit prod, Date dateBid, Card carte, User user, Long montant) {
-		super();
-		this.prod = prod;
-		this.dateBid = dateBid;
-		this.carte = carte;
-		this.user = user;
+
+	public Long getMontant() {
+		return montant;
+	}
+
+
+	public void setMontant(Long montant) {
 		this.montant = montant;
 	}
+	
+	// Constructors
+
+
+	public Bid(Date dateBid, Long montant) {
+		super();
+		this.dateBid = dateBid;
+		this.montant = montant;
+	}
+
+
 	public Bid() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
+
 	
+	
+	
+	
+
 	
 	
 	
