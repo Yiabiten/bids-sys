@@ -1,4 +1,4 @@
-package com.designpatternsproject.encheres.entities;
+package com.designpatternsproject.entities;
 
 import java.util.Collection;
 import java.util.Date;
@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="PRODUITS")
+@Table(name="PRODUIT")
 public class Produit {
 	
 	
@@ -30,7 +30,16 @@ public class Produit {
 	private String photo;
 	private Long prixMin;
 	private Date dateExp;
+	private Long idUser; 
 	
+	
+	public Long getUser() {
+		return idUser;
+	}
+	public void setUser(Long idUser) {
+		this.idUser = idUser;
+	}
+
 	@OneToMany(mappedBy="produit")
 	private Collection<Bid> bids;
 	

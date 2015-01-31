@@ -1,4 +1,4 @@
-package com.designpatternsproject.encheres.entities;
+package com.designpatternsproject.entities;
 
 import java.util.Date;
 
@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 @Entity
-@Table(name="BIDS")
+@Table(name="BID")
 public class Bid {
 	
 	@Id
@@ -20,7 +20,7 @@ public class Bid {
 	private Date dateBid;
 	
 	@ManyToOne
-	@JoinColumn(name="PRODUIT_ID")
+	@JoinColumn(name="PRODUCT_ID")
 	private Produit produit;
 	
 	@ManyToOne

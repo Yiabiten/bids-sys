@@ -2,22 +2,30 @@ package com.designpatternsproject.dao;
 
 import java.util.List;
 
-import com.designpatternsproject.encheres.entities.Bid;
-import com.designpatternsproject.encheres.entities.Card;
-import com.designpatternsproject.encheres.entities.Produit;
-import com.designpatternsproject.encheres.entities.User;
+import com.designpatternsproject.entities.Bid;
+import com.designpatternsproject.entities.Card;
+import com.designpatternsproject.entities.Produit;
+import com.designpatternsproject.entities.User;
 
 public interface IBidsDao {
 
-	public User addUser(User u);
+
 	public Produit addProduit(Produit p);
-	public Card addCard(User u, Card c);
-	public boolean addBid(User u, Produit p,long val);
-	
-	public Object authenticate(String usr,String pwd);
-	
-	User readAccount(String username);
-	List<Bid> getOperations(String username);
-	List<Card> getCards(String username);
+	public Produit editProduct(Produit p);
+	public boolean deleteProduct(Long idProd);
+	public Produit getProduct(Long idProd);
+	public List<Produit> getPrdoductsByUser(Long idUser);
+	public List<Produit> getWonPrdoducts(Long idUser);
+	public List<Produit> getAllPrdoducts();
+	public List<Produit> getOthersProduct(Long idUser);
+	public Long getLimit(Long idUser, Long idProd);
+	public List<Bid> getBids(Long idUser, Long idProd);
+	public List<Bid> getBidsByUser(Long idUser);
+	public List<Bid> getBidsOnProd(Long idProd);
+	public boolean bid(Long idProduit, Long prixBids, Long idUser);
+	public User addUser(User u);
+	public boolean addCard(User u, Card c);
+	public Card editCard(Card c);
+	public List<Card> getCards(String username);
 	
 }

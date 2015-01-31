@@ -1,4 +1,4 @@
-package com.designpatternsproject.encheres.entities;
+package com.designpatternsproject.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="CARDS")
+@Table(name="CARD")
 public class Card implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

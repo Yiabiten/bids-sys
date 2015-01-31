@@ -1,4 +1,4 @@
-package com.designpatternsproject.encheres.entities;
+package com.designpatternsproject.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="USERS")
+@Table(name="USER")
 public class User implements Serializable{
 	
 	@Id
@@ -20,11 +20,14 @@ public class User implements Serializable{
 	private Long idUser;
 	private String firstName;
 	private String lastName;
+	
 	private String phone;
 	private String address;
 	private String username;
 	private String password;
 	private String profession;
+	private boolean bloqued;
+	
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	Collection<Card> cards;
 	
@@ -32,7 +35,27 @@ public class User implements Serializable{
 	Collection<Bid> bids;
 	
 	
-	
+	public User(String firstName, String lastName, String phone,
+			String username, String password) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.username = username;
+		this.password = password;
+		this.bloqued=false;
+		this.address="address: xx, XXXX XXXX XXX XXXXX - XXXXXX, XXXXXXXX";
+	}
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public boolean isBloqued() {
+		return bloqued;
+	}
+	public void setBloqued(boolean bloqued) {
+		this.bloqued = bloqued;
+	}
 	
 	public Collection<Bid> getBids() {
 		return bids;

@@ -1,4 +1,4 @@
-package com.designpatternsproject.encheres.entities;
+package com.designpatternsproject.entities;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ADMINS")
+@Table(name="ADMIN")
 public class Admin implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

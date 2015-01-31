@@ -5,65 +5,118 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.designpatternsproject.dao.IBidsDao;
-import com.designpatternsproject.encheres.entities.Bid;
-import com.designpatternsproject.encheres.entities.Card;
-import com.designpatternsproject.encheres.entities.Produit;
-import com.designpatternsproject.encheres.entities.User;
+import com.designpatternsproject.entities.Bid;
+import com.designpatternsproject.entities.Card;
+import com.designpatternsproject.entities.Produit;
+import com.designpatternsproject.entities.User;
 @Transactional
 public class MetierImpl implements IBidsMetier {
 
 	private IBidsDao dao;
-	
+
 	public void setDao(IBidsDao dao) {
 		this.dao = dao;
 	}
 
 	@Override
-	public User addUser(User u) {
-		// TODO Auto-generated method stub
-		return dao.addUser(u);
-	}
-
-	@Override
 	public Produit addProduit(Produit p) {
-		// TODO Auto-generated method stub
+		
 		return dao.addProduit(p);
 	}
 
 	@Override
-	public Card addCard(User u, Card c) {
-		// TODO Auto-generated method stub
+	public Produit editProduct(Produit p) {
+		
+		return dao.editProduct(p);
+	}
+
+	@Override
+	public boolean deleteProduct(Long idProd) {
+		
+		return dao.deleteProduct(idProd);
+	}
+
+	@Override
+	public Produit getProduct(Long idProd) {
+		
+		return dao.getProduct(idProd);
+	}
+
+	@Override
+	public List<Produit> getPrdoductsByUser(Long idUser) {
+		
+		return dao.getPrdoductsByUser(idUser);
+	}
+
+	@Override
+	public List<Produit> getWonPrdoducts(Long idUser) {
+		
+		return dao.getWonPrdoducts(idUser);
+	}
+
+	@Override
+	public List<Produit> getAllPrdoducts() {
+		
+		return dao.getAllPrdoducts();
+	}
+
+	@Override
+	public List<Produit> getOthersProduct(Long idUser) {
+		
+		return dao.getOthersProduct(idUser);
+	}
+
+	@Override
+	public Long getLimit(Long idUser, Long idProd) {
+		
+		return dao.getLimit(idUser, idProd);
+	}
+
+	@Override
+	public List<Bid> getBids(Long idUser, Long idProd) {
+		
+		return dao.getBids(idUser, idProd);
+	}
+
+	@Override
+	public List<Bid> getBidsByUser(Long idUser) {
+		
+		return dao.getBidsByUser(idUser);
+	}
+
+	@Override
+	public List<Bid> getBidsOnProd(Long idProd) {
+		
+		return dao.getBidsOnProd(idProd);
+	}
+
+	@Override
+	public boolean bid(Long idProduit, Long prixBids, Long idUser) {
+		
+		return dao.bid(idProduit, prixBids, idUser);
+	}
+
+	@Override
+	public User addUser(User u) {
+		
+		return dao.addUser(u);
+	}
+
+	@Override
+	public boolean addCard(User u, Card c) {
 		return dao.addCard(u, c);
 	}
 
 	@Override
-	public boolean addBid(User u, Produit p, long val) {
-		// TODO Auto-generated method stub
-		return dao.addBid(u, p, val);
+	public Card editCard(Card c) {
+		return dao.editCard(c);
 	}
 
-	@Override
-	public Object authenticate(String usr, String pwd) {
-		// TODO Auto-generated method stub
-		return dao.authenticate(usr, pwd);
-	}
 
-	@Override
-	public User readAccount(String username) {
-		// TODO Auto-generated method stub
-		return dao.readAccount(username);
-	}
-
-	@Override
-	public List<Bid> getOperations(String username) {
-		// TODO Auto-generated method stub
-		return dao.getOperations(username);
-	}
 
 	@Override
 	public List<Card> getCards(String username) {
-		// TODO Auto-generated method stub
+		
 		return dao.getCards(username);
 	}
-
-}
+	}
