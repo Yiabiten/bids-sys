@@ -23,7 +23,7 @@ public class Card implements Serializable{
 	private Date expireDate;
 	private  Long numCard;
 	@ManyToOne
-	@JoinColumn(name="code_user")
+	@JoinColumn(name="user_id")
 	private  User user;
 	
 	
