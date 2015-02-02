@@ -1,6 +1,7 @@
 package com.designpatternsproject.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -34,7 +35,20 @@ public class User implements Serializable{
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	Collection<Bid> bids;
 	
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	Collection<Produit> prods;
 	
+	
+	
+	
+	public Collection<Produit> getProds() {
+		if(prods==null)
+			prods= new ArrayList<Produit>();
+		return prods;
+	}
+	public void setProds(Collection<Produit> prods) {
+		this.prods = prods;
+	}
 	public User(String firstName, String lastName, String phone,
 			String username, String password) {
 		super();
@@ -58,6 +72,8 @@ public class User implements Serializable{
 	}
 	
 	public Collection<Bid> getBids() {
+		if(bids==null)
+			 bids=new ArrayList<Bid>();
 		return bids;
 	}
 	public void setBids(Collection<Bid> bids) {
@@ -112,6 +128,8 @@ public class User implements Serializable{
 		this.profession = profession;
 	}
 	public Collection<Card> getCards() {
+		if(cards==null)
+			cards= new ArrayList<Card>();
 		return cards;
 	}
 	public void setCards(Collection<Card> cards) {

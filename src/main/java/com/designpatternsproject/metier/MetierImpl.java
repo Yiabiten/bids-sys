@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.designpatternsproject.dao.IBidsDao;
 import com.designpatternsproject.entities.Bid;
 import com.designpatternsproject.entities.Card;
+import com.designpatternsproject.entities.Limitation;
 import com.designpatternsproject.entities.Produit;
 import com.designpatternsproject.entities.User;
 @Transactional
@@ -42,16 +43,17 @@ public class MetierImpl implements IBidsMetier {
 		return dao.getProduct(idProd);
 	}
 
+	
 	@Override
-	public List<Produit> getPrdoductsByUser(Long idUser) {
+	public List<Produit> getPrdoductsByUser(User u) {
 		
-		return dao.getPrdoductsByUser(idUser);
+		return dao.getPrdoductsByUser(u);
 	}
+	
 
 	@Override
-	public List<Produit> getWonPrdoducts(Long idUser) {
-		
-		return dao.getWonPrdoducts(idUser);
+	public List<Produit> getWonPrdoducts(User u) {
+		return dao.getWonPrdoducts(u);
 	}
 
 	@Override
@@ -61,39 +63,51 @@ public class MetierImpl implements IBidsMetier {
 	}
 
 	@Override
-	public List<Produit> getOthersProduct(Long idUser) {
+	public List<Produit> getOthersProduct(User u) {
 		
-		return dao.getOthersProduct(idUser);
+		return dao.getOthersProduct(u);
 	}
 
 	@Override
-	public Long getLimit(Long idUser, Long idProd) {
+	public Long getLimit(User u, Produit p) {
 		
-		return dao.getLimit(idUser, idProd);
+		return dao.getLimit(u, p);
 	}
 
 	@Override
-	public List<Bid> getBids(Long idUser, Long idProd) {
+	public List<Bid> getBids(User u , Produit p) {
 		
-		return dao.getBids(idUser, idProd);
+		return dao.getBids(u, p);
 	}
 
 	@Override
-	public List<Bid> getBidsByUser(Long idUser) {
+	public List<Bid> getBidsByUser(User u) {
 		
-		return dao.getBidsByUser(idUser);
+		return dao.getBidsByUser(u);
 	}
 
 	@Override
-	public List<Bid> getBidsOnProd(Long idProd) {
+	public List<Bid> getBidsOnProd(Produit p) {
 		
-		return dao.getBidsOnProd(idProd);
+		return dao.getBidsOnProd(p);
 	}
 
 	@Override
-	public boolean bid(Long idProduit, Long prixBids, Long idUser) {
+	public boolean bid(Produit p, Long prixBids, User u) {
+		Long m;
+		try {
+			m=(long) dao.getBids(u, p).size();
+		} catch (NullPointerException e) {
+			m=0L;
+		}
 		
-		return dao.bid(idProduit, prixBids, idUser);
+		Long x= dao.getLimit(u, p);
+		System.out.println("hello from tst MImpl:\n"+(((m<x && x>=0) || x<0 )&& prixBids>=p.getPrixMin()));
+		if(((m<x && x>=0) || x<0 )&& prixBids>=p.getPrixMin()){
+			
+			return dao.bid(p, prixBids, u);
+		}
+		return false;
 	}
 
 	@Override
@@ -119,4 +133,11 @@ public class MetierImpl implements IBidsMetier {
 		
 		return dao.getCards(username);
 	}
+
+	@Override
+	public User authenticate(String mail, String password) {
+		// TODO Auto-generated method stub
+		return dao.authenticate(mail, password);
+	}
+
 	}

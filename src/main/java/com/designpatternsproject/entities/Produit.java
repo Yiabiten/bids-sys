@@ -1,13 +1,16 @@
 package com.designpatternsproject.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -33,19 +36,20 @@ public class Produit implements Serializable{
 	private Long prixMin;
 	private Date dateExp;
 	@ManyToOne
-	private User User; 
+	@JoinColumn(name = "user_id")
+	private User user; 
 	
 	
 	
 
 	public User getUser() {
-		return User;
+		return user;
 	}
 	public void setUser(User user) {
-		User = user;
+		this.user = user;
 	}
 
-	@OneToMany(mappedBy="produit")
+	@OneToMany(mappedBy="produit", fetch=FetchType.EAGER)
 	private Collection<Bid> bids;
 	
 	
@@ -86,6 +90,8 @@ public class Produit implements Serializable{
 		this.dateExp = dateExp;
 	}
 	public Collection<Bid> getBids() {
+		if(bids==null)
+			bids= new ArrayList<Bid>();
 		return bids;
 	}
 	public void setBids(Collection<Bid> bids) {

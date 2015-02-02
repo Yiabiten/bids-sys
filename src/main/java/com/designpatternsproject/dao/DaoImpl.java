@@ -16,7 +16,7 @@ import com.designpatternsproject.entities.User;
 public class DaoImpl implements IBidsDao{
 	@PersistenceContext
 	private EntityManager em;
-
+	
 	@Override
 	public Produit addProduit(Produit p) {
 		em.persist(p);
@@ -41,11 +41,12 @@ public class DaoImpl implements IBidsDao{
 		return em.find(Produit.class, idProd);
 	}
 
+	
 	@Override
-	public List<Produit> getPrdoductsByUser(Long idUser) {
-		if(idUser!=null && idUser!=0){
-			Query q=em.createQuery("select p from Produit p where p.idUser=:y");
-			q.setParameter("y", idUser);
+	public List<Produit> getPrdoductsByUser(User u) {
+		if(u!=null ){
+			Query q=em.createQuery("select p from Produit p where p.user=:y");
+			q.setParameter("y", u);
 			if(q.getResultList().size()!=0){
 				return q.getResultList();
 			}
@@ -53,16 +54,17 @@ public class DaoImpl implements IBidsDao{
 		}
 		return null;
 	}
+	
 
 	@Override
-	public List<Produit> getWonPrdoducts(Long idUser) {
+	public List<Produit> getWonPrdoducts(User u) {
 		
 		return null;
 	}
 
 	@Override
 	public List<Produit> getAllPrdoducts() {
-		Query q=em.createQuery("select p from Produit p orderby dateExp");
+		Query q=em.createQuery("select p from Produit p ");
 		if(q.getResultList().size()!=0){
 			return q.getResultList();
 		}
@@ -70,10 +72,10 @@ public class DaoImpl implements IBidsDao{
 	}
 
 	@Override
-	public List<Produit> getOthersProduct(Long idUser) {
-		if(idUser!=null && idUser!=0){
-			Query q=em.createQuery("select p from Produit p where p.idUser!=:y");
-			q.setParameter("y", idUser);
+	public List<Produit> getOthersProduct(User u) {
+		if(u!=null ){
+			Query q=em.createQuery("select p from Produit p where p.user!=:y");
+			q.setParameter("y", u);
 			if(q.getResultList().size()!=0){
 				return q.getResultList();
 			}
@@ -83,11 +85,11 @@ public class DaoImpl implements IBidsDao{
 	}
 
 	@Override
-	public Long getLimit(Long idUser, Long idProd) {
-		if(idUser!=null && idProd!=null){
-			Query q=em.createQuery("select l from Limit l where l.product_id=:x and l.user_id=:y");
-			q.setParameter("x", idProd);
-			q.setParameter("y", idUser);
+	public Long getLimit(User u,  Produit p) {
+		if(u!=null && p!=null){
+			Query q=em.createQuery("select l from Limitation l where l.produit=:x and l.user=:y");
+			q.setParameter("x", p);
+			q.setParameter("y", u);
 			
 			List l=q.getResultList();
 			if (l==null || l.size()==0) {
@@ -100,11 +102,11 @@ public class DaoImpl implements IBidsDao{
 	}
 
 	@Override
-	public List<Bid> getBids(Long idUser, Long idProd) {
-		if(idUser!=null && idProd!=null){
-			Query q=em.createQuery("select b from Bid b where b.PRODUCT_ID=:x and b.USER_ID=:y");
-			q.setParameter("x", idProd);
-			q.setParameter("y", idUser);
+	public List<Bid> getBids(User u, Produit p) {
+		if(u!=null && p!=null){
+			Query q=em.createQuery("select b from Bid b where b.produit=:x and b.user=:y");
+			q.setParameter("x", p);
+			q.setParameter("y", u);
 			
 			List l=q.getResultList();
 			if (l==null || l.size()==0) {
@@ -117,10 +119,10 @@ public class DaoImpl implements IBidsDao{
 	}
 
 	@Override
-	public List<Bid> getBidsByUser(Long idUser) {
-		if(idUser!=null ){
-			Query q=em.createQuery("select b from Bid b where b.USER_ID=:y");
-			q.setParameter("y", idUser);
+	public List<Bid> getBidsByUser(User u) {
+		if(u!=null ){
+			Query q=em.createQuery("select b from Bid b where b.user=:y");
+			q.setParameter("y", u);
 			List l=q.getResultList();
 			if (l==null || l.size()==0) {
 				return null;
@@ -132,10 +134,10 @@ public class DaoImpl implements IBidsDao{
 	}
 
 	@Override
-	public List<Bid> getBidsOnProd(Long idProd) {
-		if(idProd!=null ){
-			Query q=em.createQuery("select b from Bid b where b.PRODUCT_ID=:y");
-			q.setParameter("y", idProd);
+	public List<Bid> getBidsOnProd(Produit p) {
+		if(p!=null ){
+			Query q=em.createQuery("select b from Bid b where b.produit=:y");
+			q.setParameter("y", p);
 			List l=q.getResultList();
 			if (l==null || l.size()==0) {
 				return null;
@@ -147,14 +149,17 @@ public class DaoImpl implements IBidsDao{
 	}
 
 	@Override
-	public boolean bid(Long idProduit, Long prixBids, Long idUser) {
+	public boolean bid(Produit p, Long prixBids, User u) {
 		
-		Produit p = em.find(Produit.class, idProduit);
-		User u = em.find(User.class, idUser);
+		
 		if(p==null || u ==null) return false;
 		
 		Bid b = new Bid(new Date(), prixBids);
 		b.setProduit(p); b.setUser(u);
+		
+		u.getBids().add(b);
+		p.getBids().add(b);
+		
 		em.persist(b);
 		return true;
 	}
@@ -182,6 +187,23 @@ public class DaoImpl implements IBidsDao{
 
 	@Override
 	public List<Card> getCards(String username) {
+		return null;
+	}
+
+	@Override
+	public User authenticate(String mail, String password) {
+		if(mail!=null && password!=null){
+			Query q=em.createQuery("select u from User u where u.username=:x and u.password=:y");
+			q.setParameter("x", mail);
+			q.setParameter("y", password);
+			
+			List l=q.getResultList();
+			if (l==null || l.size()==0) {
+				return null;
+			}
+			return (User) l.get(0);
+			
+		}
 		return null;
 	}
 

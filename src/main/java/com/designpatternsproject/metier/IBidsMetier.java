@@ -13,18 +13,19 @@ public interface IBidsMetier {
 	public Produit editProduct(Produit p);
 	public boolean deleteProduct(Long idProd);
 	public Produit getProduct(Long idProd);
-	public List<Produit> getPrdoductsByUser(Long idUser);
-	public List<Produit> getWonPrdoducts(Long idUser);
+	public List<Produit> getPrdoductsByUser(User u);
+	public List<Produit> getWonPrdoducts(User u);
 	public List<Produit> getAllPrdoducts();
-	public List<Produit> getOthersProduct(Long idUser);
-	public Long getLimit(Long idUser, Long idProd);
-	public List<Bid> getBids(Long idUser, Long idProd);
-	public List<Bid> getBidsByUser(Long idUser);
-	public List<Bid> getBidsOnProd(Long idProd);
-	public boolean bid(Long idProduit, Long prixBids, Long idUser);
+	public List<Produit> getOthersProduct(User u);
+	public Long getLimit(User u, Produit p);
+	public List<Bid> getBids(User u, Produit p);
+	public List<Bid> getBidsByUser(User u);
+	public List<Bid> getBidsOnProd(Produit p);
+	public boolean bid(Produit p, Long prixBids, User u);
 	public User addUser(User u);
 	public boolean addCard(User u, Card c);
 	public Card editCard(Card c);
 	public List<Card> getCards(String username);
+	public User authenticate(String mail, String password);
 	
 }
