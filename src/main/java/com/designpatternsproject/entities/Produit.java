@@ -39,8 +39,6 @@ public class Produit implements Serializable{
 	@JoinColumn(name = "user_id")
 	private User user; 
 	
-	
-	
 
 	public User getUser() {
 		return user;
@@ -107,6 +105,7 @@ public class Produit implements Serializable{
 		this.prixMin = prixMin;
 		this.dateExp = dateExp;
 	}
+	
 	
 	public Produit() {
 		super();

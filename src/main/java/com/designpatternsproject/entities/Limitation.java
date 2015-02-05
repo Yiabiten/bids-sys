@@ -26,13 +26,13 @@ public class Limitation implements Serializable {
 	private Produit produit;
 	@ManyToOne
 	@JoinColumn(name = "admin_id")
-	private Admin admin;
+	private User admin;
 
-	public Admin getAdmin() {
+	public User getAdmin() {
 		return admin;
 	}
 
-	public void setAdmin(Admin admin) {
+	public void setAdmin(User admin) {
 		this.admin = admin;
 	}
 

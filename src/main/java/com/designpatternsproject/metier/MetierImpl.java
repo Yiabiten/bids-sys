@@ -9,6 +9,7 @@ import com.designpatternsproject.entities.Bid;
 import com.designpatternsproject.entities.Card;
 import com.designpatternsproject.entities.Limitation;
 import com.designpatternsproject.entities.Produit;
+import com.designpatternsproject.entities.Role;
 import com.designpatternsproject.entities.User;
 @Transactional
 public class MetierImpl implements IBidsMetier {
@@ -94,20 +95,9 @@ public class MetierImpl implements IBidsMetier {
 
 	@Override
 	public boolean bid(Produit p, Long prixBids, User u) {
-		Long m;
-		try {
-			m=(long) dao.getBids(u, p).size();
-		} catch (NullPointerException e) {
-			m=0L;
-		}
-		
-		Long x= dao.getLimit(u, p);
-		System.out.println("hello from tst MImpl:\n"+(((m<x && x>=0) || x<0 )&& prixBids>=p.getPrixMin()));
-		if(((m<x && x>=0) || x<0 )&& prixBids>=p.getPrixMin()){
 			
 			return dao.bid(p, prixBids, u);
-		}
-		return false;
+		
 	}
 
 	@Override
@@ -138,6 +128,72 @@ public class MetierImpl implements IBidsMetier {
 	public User authenticate(String mail, String password) {
 		// TODO Auto-generated method stub
 		return dao.authenticate(mail, password);
+	}
+
+	@Override
+	public User findUserByUsername(String a) {
+		return dao.findUserByUsername(a);
+	}
+
+	@Override
+	public Long getCountBidsUserOnProd(User user, Produit pr) {
+		// TODO Auto-generated method stub
+		return dao.getCountBidsUserOnProd(user, pr) ;
+	}
+
+	@Override
+	public Long getCurrentMaxBidOnProd(Produit pr) {
+		// TODO Auto-generated method stub
+		return dao.getCurrentMaxBidOnProd(pr);
+	}
+
+	@Override
+	public Role getRole(String s) {
+		// TODO Auto-generated method stub
+		return dao.getRole(s);
+	}
+
+	@Override
+	public boolean addLimit(User ad, User u, Produit p, Long value) {
+		
+		return dao.addLimit(ad, u, p, value);
+	}
+
+	@Override
+	public Limitation editLimit(Limitation l) {
+		// TODO Auto-generated method stub
+		return dao.editLimit(l);
+	}
+
+	@Override
+	public Limitation findLimitation(User u, Produit p) {
+		// TODO Auto-generated method stub
+		return dao.findLimitation(u,p);
+	}
+
+	@Override
+	public User getUser(Long id) {
+		// TODO Auto-generated method stub
+		return dao.getUser(id);
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		// TODO Auto-generated method stub
+		return dao.getAllUsers();
+	}
+
+	@Override
+	public void editUser(User u) {
+		dao.editUser(u);
+		
+	}
+
+	@Override
+	public void payForService(User user, int priceOfService) {
+		if(user==null) return;
+		System.out.println(user.getUsername()+" payed "+priceOfService);
+		
 	}
 
 	}

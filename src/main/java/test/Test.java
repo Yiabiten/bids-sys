@@ -9,33 +9,60 @@ import com.designpatternsproject.entities.Card;
 import com.designpatternsproject.entities.Produit;
 import com.designpatternsproject.entities.User;
 import com.designpatternsproject.metier.IBidsMetier;
+import com.designpatternsproject.metier.MetierImpl;
 
 public class Test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
+		
 
+		/*	
+			String original = new Scanner(System.in).next();
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(original.getBytes());
+			byte[] digest = md.digest();
+			StringBuffer sb = new StringBuffer();
+			for (byte b : digest) {
+				sb.append(String.format("%02x", b & 0xff));
+			}
+
+			System.out.println("original:" + original);
+			System.out.println("digested(hex):" + sb.toString());
+		
+		*/
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
 				new String[] { "applicationContext.xml" });
 		IBidsMetier m = (IBidsMetier) ctx.getBean("metier");
 
 		System.out.println("======begin=======");
 
-		//********************************************
-		User x = new User("jhdgsf", "sdfkuzd", "06XXOOXXOO",
-				"qsdqsdten@mail.me", "pwd");
+		
+		
+		User u = m.getUser(1L);
+		
+		User x = new User("Super", "User", "06XXOOXXOO",
+				"su@mail.me", "password");
+		x.getRoles().add(m.getRole("Admin"));
 		m.addUser(x);
+		
 
-		Date d = new Date("07/07/2015");
-
-		Produit p = new Produit("Product9", "makaynch", "", 10L, d);
-		p.setUser(x);
-		p = m.addProduit(p);
+		
+		/*
+		
 		//********************************************
+		
 		
 		x = new User("Youness", "IABITEN", "06XXOOXXOO", "yiabiten@mail.me",
 				"password");
 		m.addUser(x);
+		
+		
+		x = new User("Amine", "RHANEMI", "06XXOOXXOO", "rhanemi@gmail.com",
+				"password");
+		m.addUser(x);
+		
 
+		/*
 		d = new Date("03/03/2015");
 
 		p = new Produit("Product1", "usé", "", 550L, d);
@@ -47,10 +74,12 @@ public class Test {
 		pp.setUser(x);
 		pp = m.addProduit(pp);
 
+		
 		Card c = new Card("VISA", "Youness Yabiten", d, 12345678901L);
 
 		System.out.println("Adding card to usr:" + m.addCard(x, c));
 
+		
 		System.out.println("-----------------------------\n+"
 				 		+  "------------My Projects------+"
 				 		+  "-----------------------------");
@@ -82,9 +111,10 @@ public class Test {
 		System.out.println("biding"+m.bid(p, 500L, x));
 		System.out.println("biding"+m.bid(p, 1500L, x));
 		
+		System.out.println(m.getCountBidsUserOnProd(x, p));
+		*/
 		
 		
-
 	}
 
 }

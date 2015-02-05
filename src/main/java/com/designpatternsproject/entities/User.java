@@ -9,6 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,13 +32,28 @@ public class User implements Serializable{
 	private String profession;
 	private boolean bloqued;
 	
+
+
+	@ManyToMany
+	@JoinTable(name="users_roles",
+				joinColumns=@JoinColumn(name="user_id"),
+				inverseJoinColumns=@JoinColumn(name="role_id"))
+	Collection<Role> roles;
+	
+	public Collection<Role> getRoles() {
+		if(roles==null) roles=new ArrayList<Role>();
+		return roles;
+	}
+	public void setRoles(Collection<Role> roles) {
+		this.roles = roles;
+	}
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	Collection<Card> cards;
 	
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
 	Collection<Bid> bids;
 	
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
 	Collection<Produit> prods;
 	
 	

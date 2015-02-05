@@ -1,5 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
+<%@taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,31 +32,32 @@
 <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700"
 	rel="stylesheet" type="text/css">
 <!--link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'-->
-<style type="text/css">
-	@font-face {
-		font-family: 'Kaushan';
-		font-style: normal;
-		font-weight: 400;
-		src: url('<%=request.getContextPath()%>/resources/fonts/kaushan1.woff2')
-			format('woff2');
-		unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF,
-			U+2C60-2C7F, U+A720-A7FF;
-	}
 	
-	@font-face {
-		font-family: 'Kaushan';
-		font-style: normal;
-		font-weight: 400;
-		src: url('<%=request.getContextPath()%>/resources/fonts/kaushan2.woff2')
-			format('woff2');
-		unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
-			U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-	}
+	<style type="text/css">
+		@font-face {
+			font-family: 'Kaushan';
+			font-style: normal;
+			font-weight: 400;
+			src: url('<%=request.getContextPath()%>/resources/fonts/kaushan1.woff2')
+				format('woff2');
+			unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF,
+				U+2C60-2C7F, U+A720-A7FF;
+		}
 	
-	navbar-brand {
-		font-family: 'Kaushan';
-	}
-</style>
+		@font-face {
+			font-family: 'Kaushan';
+			font-style: normal;
+			font-weight: 400;
+			src: url('<%=request.getContextPath()%>/resources/fonts/kaushan2.woff2')
+				format('woff2');
+			unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
+				U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+		}
+		
+		#brnd {
+			font-family: "Kaushan";
+		}
+	</style>
 
 <link
 	href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
@@ -85,7 +88,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand page-scroll" href="#page-top">Bid$</a>
+				<a class="navbar-brand page-scroll" id="brnd" href="#page-top">Bid$</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -115,54 +118,54 @@
 		</div>
 	</header>
 
-	<c:if test="${empty loginForm.user}">
-	<section id="login">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3"></div>
-				<div class="col-lg-6">
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<div class="page-header">
-								<h3>Login</h3>
+	
+		<section id="login">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3"></div>
+					<div class="col-lg-6">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<div class="page-header">
+									<h3>Login</h3>
+								</div>
+								<form method="POST" action="j_spring_security_check">
+
+									<label for="inputEmail">Email</label>
+									<div class="input-group">
+										<span class="input-group-addon"><span
+											class="glyphicon glyphicon-envelope"></span></span> <input
+											type="email" name="j_username" required="true"
+											class="form-control" id="inputEmail"
+											placeholder="Enter email" />
+									</div>
+
+									<br /> <label for="inputPassword">Password</label>
+									<div class="input-group">
+										<span class="input-group-addon"><span
+											class="glyphicon glyphicon-lock"></span></span> <input
+											type="password" name="j_password" required="true"
+											class="form-control" id="inputPassword"
+											placeholder="Password" />
+									</div>
+									<hr />
+									<button type="submit" value="OK" class="btn btn-primary">
+										<span class="glyphicon glyphicon-ok-sign"></span> Log in
+									</button>
+									<span class="btn">or</span> <a href="register"
+										class="btn btn-info">join us</a>
+								</form>
+								<font color="red"> <span>${ sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message }</span>
+								</font>
 							</div>
-							<f:form modelAttribute="loginForm" method="post" action="feed">
-
-								<label for="inputEmail">Email</label>
-								<div class="input-group">
-									<span class="input-group-addon"><span
-										class="glyphicon glyphicon-envelope"></span></span>
-									<f:input path="mail" type="email" name="mail" required="true"
-										class="form-control" id="inputEmail" placeholder="Enter email" />
-								</div>
-
-								<br />
-
-								<label for="inputPassword">Password</label>
-								<div class="input-group">
-									<span class="input-group-addon"><span
-										class="glyphicon glyphicon-lock"></span></span>
-									<f:input path="password" type="password" name="pwd"
-										required="true" class="form-control" id="inputPassword"
-										placeholder="Password" />
-								</div>
-								<hr />
-								<button type="submit" value="OK" class="btn btn-primary">
-									<span class="glyphicon glyphicon-ok-sign"></span> Log in
-								</button>
-								<span class="btn">or</span>
-								<a href="register.php" class="btn btn-info">join us</a>
-								<p>${loginForm.mail}<br />
-								</p>
-							</f:form>
 						</div>
 					</div>
+					<div class="col-lg-3"></div>
 				</div>
-				<div class="col-lg-3"></div>
 			</div>
-		</div>
-	</section>
-	</c:if>
+		</section>
+	
+
 	<!-- Services Section -->
 	<section id="services">
 		<div class="container">

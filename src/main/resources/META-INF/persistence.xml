@@ -10,13 +10,13 @@
 		<class>com.designpatternsproject.entities.User</class>
 		<class>com.designpatternsproject.entities.Card</class>
 		<class>com.designpatternsproject.entities.Produit</class>
-		<class>com.designpatternsproject.entities.Admin</class>
 		<class>com.designpatternsproject.entities.Bid</class>
 		<class>com.designpatternsproject.entities.Limitation</class>
+		<class>com.designpatternsproject.entities.Role</class>
 		<properties>
-
+		
 			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.hbm2ddl.auto" value="create" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 
 		</properties>
 
